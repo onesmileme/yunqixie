@@ -1,4 +1,4 @@
-package com.chunhui.yunqixie.domain.dao;
+package com.chunhui.yunqixie.domain.dto;
 
 import  lombok.Data;
 

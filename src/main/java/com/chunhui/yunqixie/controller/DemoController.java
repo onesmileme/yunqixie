@@ -1,7 +1,7 @@
 package com.chunhui.yunqixie.controller;
 
-import com.chunhui.yunqixie.domain.dao.FunFeedDAO;
-import com.chunhui.yunqixie.service.FunFeedMapper;
+import com.chunhui.yunqixie.domain.dto.FunFeedDAO;
+import com.chunhui.yunqixie.domain.dao.FunFeedMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

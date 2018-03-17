@@ -1,6 +1,6 @@
-package com.chunhui.yunqixie.service;
+package com.chunhui.yunqixie.domain.dao;
 
-import com.chunhui.yunqixie.domain.dao.FunFeedDAO;
+import com.chunhui.yunqixie.domain.dto.FunFeedDAO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
