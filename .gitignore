@@ -25,3 +25,5 @@ nbdist/
 
 
 application.properties
+
+.DS_Store

@@ -5,13 +5,15 @@ import com.chunhui.yunqixie.domain.dao.FunFeedMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("demo")
+//@RequestMapping("demo")
 public class DemoController {
 
-    @Autowired
+    @Resource
     private FunFeedMapper funFeedMapper;
 
     @RequestMapping("info")
