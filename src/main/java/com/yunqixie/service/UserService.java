@@ -20,11 +20,37 @@ public class UserService {
         return userMapper.getUserDAO(uid);
     }
 
+    public UserDAO getUserDAOWithOpenid(String openid){
+        if (openid == null || openid.length() == 0){
+            return null;
+        }
+        return userMapper.getUserDAOWithOpenid(openid);
+    }
+
     public int insertUserDao(String openid , String unionid , String nickname , String avatar ,
                                  String country , String province , String city , int sex,
                                  String birthday , String mobile){
 
-        return userMapper.insertUser(openid,unionid,nickname,nickname,avatar,country,
+        int result = userMapper.insertUser(openid,unionid,nickname,nickname,avatar,country,
                 province,city,sex,birthday,mobile,0);
+
+        if (result == 0){
+            int uid = userMapper.getUid(openid);
+            return uid;
+        }
+
+        return -1;
     }
+
+    public  int getUid(String openid){
+        return userMapper.getUid(openid);
+    }
+    public  int updateUser(int uid ,  String openid , String unionid  , String nickname , String avatar ,
+                           String country , String province , String city , int sex,
+                           String birthday , String mobile ){
+        return userMapper.updateUser(uid,openid,unionid,nickname,nickname,avatar,country,province,city,
+                sex,birthday,mobile,0);
+    }
+
+
 }
