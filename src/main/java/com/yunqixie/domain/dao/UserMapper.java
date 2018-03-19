@@ -1,10 +1,7 @@
 package com.yunqixie.domain.dao;
 
 import com.yunqixie.domain.dto.UserDAO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -13,11 +10,18 @@ public interface UserMapper {
     UserDAO getUserDAO(int uid);
 
     @Insert("insert into user (openid ,unionid,wechat_nickname,nickname,avatar , country , province , city , sex , " +
-            "ctime , birthday , mobile , is_robot) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
-            "#{avatar},#{country},#{province},#{city},#{sex},#{ctime},#{birthday},#{mobile},#{is_robot});")
-    int insertUser(String openid , String unionid ,String wechat_name , String nickname , String avatar ,
-                          String country , String province , String city , int sex,
-                          String birthday , String mobile , int is_robot);
+            " birthday , mobile , is_robot) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
+            "#{avatar},#{country},#{province},#{city},#{sex},#{birthday},#{mobile},#{is_robot});")
+    int insertUser(@Param("openid") String openid ,@Param("unionid") String unionid ,
+                   @Param("wechat_nickname") String wechat_name , @Param("nickname") String nickname ,
+                   @Param("avatar") String avatar ,@Param("country") String country ,
+                   @Param("province") String province ,@Param("city") String city ,@Param("sex") int sex,
+                   @Param("birthday") String birthday ,@Param("mobile") String mobile ,@Param("is_robot") int is_robot);
+
+    @Insert("insert into user (openid ,unionid,wechat_nickname,nickname,avatar , country , province , city , sex , " +
+            " birthday , mobile ) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
+            "#{avatar},#{country},#{province},#{city},#{sex},#{birthday},#{mobile});")
+    int insertUserWithUserDAO(UserDAO userDAO);
 
     @Select("select * from user where openid = #{openid};")
     UserDAO getUserDAOWithOpenid(String openid);
@@ -25,12 +29,18 @@ public interface UserMapper {
     @Select("select uid from user where openid = #{openid};")
     int getUid(String openid);
 
-    @Update("update user set openid= #{openid} and unionid = #{unionid} and wechat_nickname= #{wechat_nickname} " +
-            "and nickname = #{nickname} and avatar = #{avatar} and country = #{country} and provicen = #{province}" +
-            "and city = #{city} and sex = #{sex} and birthday = #{birthday} and mobile = #{mobile} where uid = #{uid};")
-    int updateUser(int uid ,  String openid , String unionid ,String wechat_name , String nickname , String avatar ,
-                   String country , String province , String city , int sex,
-                   String birthday , String mobile , int is_robot);
+    @Update("update user set openid= #{openid} , unionid = #{unionid} , wechat_nickname= #{wechat_nickname} " +
+            ", nickname = #{nickname} , avatar = #{avatar} , country = #{country} , province = #{province}" +
+            ", city = #{city} , sex = #{sex} , birthday = #{birthday} , mobile = #{mobile} where uid = #{uid};")
+    int updateUser(@Param("uid") int uid , @Param("openid") String openid ,@Param("unionid") String unionid ,
+                   @Param("wechat_nickname") String wechat_name ,@Param("nickname") String nickname ,
+                   @Param("avatar") String avatar ,@Param("country") String country ,
+                   @Param("province") String province ,@Param("city") String city ,@Param("sex") int sex,
+                   @Param("birthday") String birthday ,@Param("mobile") String mobile ,@Param("is_robot") int is_robot);
 
+    @Update("update user set openid= #{openid} , unionid = #{unionid} , wechat_nickname= #{wechat_nickname} " +
+            ", nickname = #{nickname} , avatar = #{avatar} , country = #{country} , province = #{province}" +
+            ", city = #{city} , sex = #{sex} , birthday = #{birthday} , mobile = #{mobile} where uid = #{uid};")
+    int updateUserWithUserDAO(UserDAO user);
 
 }

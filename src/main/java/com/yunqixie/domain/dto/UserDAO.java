@@ -10,7 +10,9 @@ public class UserDAO {
 
     private int uid;
     private String openid;
+    private String unionid;
     private String nickname;
+    private String wechat_nickname;
     private String avatar;
     private String country;
     private String province;

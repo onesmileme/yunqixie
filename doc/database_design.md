@@ -7,13 +7,13 @@
 
     tweet用来存储用户发的帖子的结构
 
-    ```
+    ​```
     create table tweet (
         tid int(11) unsigned not null  auto_increment comment '帖子id',
         uid int(11) unsigned not null comment '创建者 uid',
         type int unsigned  not null default '0'  comment '帖子类型 默认是普通文本帖子',
         title varchar(128) default '' comment '帖子标题',
-        content varchar(256) not null comment '帖子内容',
+        content mediumtext not null comment '帖子内容',
         images varchar(1000) comment '帖子图片链接',
         ctime timestamp not null default CURRENT_TIMESTAMP comment '帖子创建时间',
         is_del int unsigned not null default '0' comment '是否被删除',
@@ -25,8 +25,8 @@
     `content_org` mediumtext NOT NULL COMMENT '转发文案原文',
     `parent_tid` int(11) DEFAULT '0',
     `origin_tid` int(11) DEFAULT '0',
-
-    ```
+    
+    ​```
 
 ## zan 表结构
 
@@ -67,7 +67,7 @@ create table comment (
         0x1  a follow b
         0x2  b follow a
         0x3  a and follow each other 
-
+    
     用户关系表由于当时的需求，被强制当做好友表进行使用；其实可以考虑和微博一样，在调取时候仅提取某个人关注列表；如果要做用户搜索，可以考虑
     把被关注用户的昵称进行存储
 
@@ -111,4 +111,4 @@ create table user (
      unique key uni_openid (openid)
 );
 
-```
+ ```
