@@ -1,7 +1,7 @@
-package com.chunhui.yunqixie.controller;
+package com.yunqixie.controller;
 
-import com.chunhui.yunqixie.domain.dto.FunFeedDAO;
-import com.chunhui.yunqixie.domain.dao.FunFeedMapper;
+import com.yunqixie.domain.dto.FunFeedDAO;
+import com.yunqixie.domain.dao.FunFeedMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-//@RequestMapping("demo")
+@RequestMapping("demo")
 public class DemoController {
 
     @Resource

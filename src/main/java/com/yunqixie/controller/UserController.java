@@ -1,8 +1,8 @@
-package com.chunhui.yunqixie.controller;
+package com.yunqixie.controller;
 
-import com.chunhui.yunqixie.domain.dto.UserDAO;
-import com.chunhui.yunqixie.service.UserService;
-import com.chunhui.yunqixie.utils.ResponseUtil;
+import com.yunqixie.domain.dto.UserDAO;
+import com.yunqixie.service.UserService;
+import com.yunqixie.utils.ResponseUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

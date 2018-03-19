@@ -1,7 +1,7 @@
-package com.chunhui.yunqixie.utils;
+package com.yunqixie.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chunhui.yunqixie.domain.common.BaseResponseModel;
+import com.yunqixie.domain.common.BaseResponseModel;
 
 public class ResponseUtil {
 

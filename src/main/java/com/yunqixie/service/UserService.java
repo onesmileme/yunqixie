@@ -1,7 +1,7 @@
-package com.chunhui.yunqixie.service;
+package com.yunqixie.service;
 
-import com.chunhui.yunqixie.domain.dao.UserMapper;
-import com.chunhui.yunqixie.domain.dto.UserDAO;
+import com.yunqixie.domain.dao.UserMapper;
+import com.yunqixie.domain.dto.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.UserDataHandler;
 
