@@ -3,8 +3,10 @@ package com.yunqixie.service;
 import com.yunqixie.domain.dao.UserMapper;
 import com.yunqixie.domain.dto.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.UserDataHandler;
 
+@Service
 public class UserService {
 
     @Autowired
