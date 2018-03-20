@@ -5,6 +5,7 @@ import com.yunqixie.domain.dto.CommentDTO;
 import com.yunqixie.domain.dto.TweetDTO;
 import com.yunqixie.service.TweetService;
 import com.yunqixie.utils.ResponseUtil;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class TweetController {
 
     @RequestMapping(value = "publish" , method = RequestMethod.POST)
     public String publishTweet(@RequestParam("uid") int uid , @RequestParam("content") String content ,
-                               @RequestParam("images") String images){
+                               @RequestParam(value = "images" , required = false , defaultValue = "") String images){
 
         TweetDTO tweetDTO = null;
         try {

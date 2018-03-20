@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.w3c.dom.UserDataHandler;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 @Service
 public class UserService {
 
@@ -41,11 +44,51 @@ public class UserService {
                              String country, String province, String city, int sex,
                              String birthday, String mobile) {
 
+        try{
+            if (openid.length() == 0 || unionid.length() == 0 || nickname.length() == 0 ||
+                    avatar.length() == 0 ){
+                return -1;
+            }
+        }catch (NullPointerException e){
+            return -1;
+        }
+
+        if (country == null ){
+            country = "";
+        }
+        if (province == null){
+            province = "";
+        }
+        if (city == null){
+            city = "";
+        }
+
         try {
 
+            UserDTO userDTO = new UserDTO();
+            userDTO.setOpenid(openid);
+            userDTO.setUnionid(unionid);
+            userDTO.setNickname(nickname);
+            userDTO.setWechat_nickname(nickname);
+            userDTO.setAvatar(avatar);
+            userDTO.setCountry(country);
+            userDTO.setProvince(province);
+            userDTO.setCity(city);
+            userDTO.setSex(sex);
+            userDTO.setMobile(mobile != null ? mobile:"");
 
-            int result = userMapper.insertUser(openid, unionid, nickname, nickname, avatar, country,
-                    province, city, sex, birthday, mobile, 0);
+            Timestamp timestamp = null;
+            try {
+                if (birthday != null) {
+                    timestamp = Timestamp.valueOf(birthday);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                System.out.println("birthday is: "+birthday);
+                timestamp = new Timestamp(0);
+            }
+            userDTO.setBirthday(timestamp);
+            int result = userMapper.insertUserWithUserDTO(userDTO);
 
             if (result >= 0) {
                 int uid = userMapper.getUid(openid);
@@ -62,6 +105,28 @@ public class UserService {
 
     public int insertUserWithUserDTO(UserDTO userDAO) {
         try {
+            if (userDAO.getCountry() == null){
+                userDAO.setCountry("");
+            }
+            if (userDAO.getProvince() == null){
+                userDAO.setProvince("");
+            }
+            if (userDAO.getCity() == null){
+                userDAO.setCity("");
+            }
+            if (userDAO.getAvatar() == null){
+                userDAO.setAvatar("");
+            }
+            if (userDAO.getNickname() == null){
+                userDAO.setNickname("");
+            }
+            if (userDAO.getWechat_nickname() == null){
+                userDAO.setWechat_nickname(userDAO.getNickname());
+            }
+            if (userDAO.getMobile() == null){
+                userDAO.setMobile("");
+            }
+
             int result = userMapper.insertUserWithUserDTO(userDAO);
 
             if (result >= 0) {

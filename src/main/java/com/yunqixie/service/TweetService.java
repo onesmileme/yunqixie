@@ -29,8 +29,23 @@ public class TweetService {
 
     public int publish(int uid , String content , String images ){
 
-        return tweetMapper.publishTweet(uid,0,content,images);
+        if (uid <= 0 || content == null ){
+            return -1;
+        }
+
+        UserDTO userDTO = userMapper.getUserDTO(uid);
+        if (userDTO == null){
+            return -1;
+        }
+
+        TweetDTO tweetDTO = new TweetDTO();
+        tweetDTO.setUid(uid);
+        tweetDTO.setContent(content);
+        tweetDTO.setImages(images != null ?images:"");
+        tweetMapper.publishTweetWithDTO(tweetDTO);
+        return tweetDTO.getTid();
     }
+
 
     public int delete(int tid , int uid){
 
@@ -61,7 +76,7 @@ public class TweetService {
         ZanDTO zanDTO = zanMapper.getZan(tid,uid);
         if (zanDTO != null){
             //already zaned
-            return 0;
+            return zanDTO.getZid();
         }
         UserDTO userDAO = userMapper.getUserDTO(uid);
         if (userDAO == null){
@@ -79,16 +94,13 @@ public class TweetService {
         zanDTO.setUsername(userDAO.getNickname());
 
         try {
-            int zid = zanMapper.addZan(zanDTO);
-            zanDTO.setZid(zid);
+            zanMapper.addZan(zanDTO);
         }catch (Exception e){
             e.printStackTrace();
             return -1;
         }
 
-
         return zanDTO.getZid();
-
     }
 
     public int unzan(int tid , int uid ){
@@ -103,12 +115,18 @@ public class TweetService {
 
     public  int doComment(CommentDTO commentDTO){
 
-        return commentMapper.doCommentWithModel(commentDTO);
+        if (commentDTO.getContent() == null || commentDTO.getFrom_uid() == 0 ||
+                commentDTO.getTid() == 0){
+            return -1;
+        }
+
+        commentMapper.doCommentWithModel(commentDTO);
+        return commentDTO.getCid();
     }
 
     public  int delComment(int cid , int tid , int uid) {
 
-        CommentDTO commentDTO = commentMapper.getCommeent(cid,tid,cid);
+        CommentDTO commentDTO = commentMapper.getCommentAndCheck(cid,tid,uid);
         if (commentDTO == null){
             return  -1;//not exists
         }

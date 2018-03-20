@@ -1,11 +1,15 @@
 package com.yunqixie;
 
+import com.yunqixie.domain.dto.CommentDTO;
+import com.yunqixie.domain.dto.TweetDTO;
 import com.yunqixie.domain.dto.UserDTO;
+import com.yunqixie.service.TweetService;
 import com.yunqixie.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -24,27 +28,26 @@ public class YunqixieApplicationTests {
 	@Resource
 	UserService userService;
 
+	@Resource
+    TweetService tweetService;
+
 	@Test
 	public void userBind(){
 
-
-		for (int i = 0; i < 20; i++) {
+        int lastUid = 1;
+		for (int i = 0; i < 5; i++) {
 			UserDTO userDAO = this.mockUserDTO();
 
-			/*
-			int uid = userService.insertUserDao(userDAO.getOpenid(), userDAO.getUnionid(), userDAO.getNickname(), userDAO.getAvatar(),
-					userDAO.getCountry(), userDAO.getProvince(), userDAO.getCity(), userDAO.getSex(),
-					userDAO.getBirthday().toString(), "");
-					*/
 			int uid = userService.insertUserWithUserDTO(userDAO);
 			System.out.println("uid is: " + uid);
+			Assert.isTrue(uid >lastUid , "insert uid failed");
+			lastUid =uid;
 		}
 
 	}
 
     @Test
 	public void userInfo(){
-
 
 		for (int i = 60 ; i < 80 ; i+= 3){
 			UserDTO userDAO = userService.getUserDTO(i);
@@ -117,4 +120,58 @@ public class YunqixieApplicationTests {
 
 		return userDAO;
 	}
+
+	@Test
+	public void tweetPublishTest(){
+
+        int tid  = tweetService.publish(108,"HAHAHA","");
+	    System.out.println("tid is: "+tid);
+        Assert.isTrue(tid > 0 , "publish tweet failed");
+
+        tid = tweetService.publish(12000,"invalid user ","");
+        System.out.println("tid is: "+tid);
+        Assert.isTrue(tid <= 0 , "should not publish tweet success");
+
+    }
+
+    @Test
+    public void  commentTest(){
+
+        CommentDTO commentDTO = new CommentDTO();
+
+        commentDTO.setTid(1);
+        commentDTO.setFrom_uid(108);
+        commentDTO.setContent("不错");
+
+        int cid = tweetService.doComment(commentDTO);
+        Assert.isTrue(cid > 0 , "comment failed");
+    }
+
+    @Test
+    public void delCommentTest(){
+
+        int result = tweetService.delComment(2,1,108);
+	    Assert.isTrue(result >= 0 ,"remove comment failed");
+
+	    result = tweetService.delComment(1,1,108);
+	    Assert.isTrue(result < 0,"delete comment went wrong");
+
+
+
+    }
+
+    @Test
+    public void zanTest(){
+
+	   int zid = tweetService.zan(1,108);
+	   Assert.isTrue(zid > 0 , "zan failed");
+
+	   zid = tweetService.unzan(1,108);
+	   Assert.isTrue(zid >= 0 , "unzan failed");
+
+	   zid = tweetService.zan(1,1234);
+	   Assert.isTrue(zid < 0 , "invalid param");
+    }
+
+
 }

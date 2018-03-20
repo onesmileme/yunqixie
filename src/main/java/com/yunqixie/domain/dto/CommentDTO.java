@@ -12,6 +12,7 @@ public class CommentDTO {
     private int from_uid;
     private int to_uid;
     private int to_cid;
+    private String content;
     private int is_del;
     private Timestamp ctime;
 }

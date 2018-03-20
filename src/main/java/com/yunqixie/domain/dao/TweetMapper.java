@@ -7,11 +7,14 @@ import org.apache.ibatis.annotations.*;
 public interface TweetMapper {
 
 
-    @Insert("insert into tweet(uid,type,content, images) values(#{uid},#{type},#{content},#{images});")
+    /*
+    //only use dto can get insert tid
+    @Insert("insert into tweet(uid,type,content, images) values(#{uid},#{type},#{content},#{images});" +
+            "select last_insert_id();")
     @Options(useGeneratedKeys = true , keyProperty = "tid" , keyColumn = "tid")
     int publishTweet(@Param("uid") int uid ,@Param("type") int type ,@Param("content") String content ,
                      @Param("images") String images);
-
+    */
     @Insert("insert into tweet(uid,type,content, images) values(#{uid},#{type},#{content},#{images});")
     @Options(useGeneratedKeys = true , keyProperty = "tid" , keyColumn = "tid")
     int publishTweetWithDTO(TweetDTO tweetDTO);

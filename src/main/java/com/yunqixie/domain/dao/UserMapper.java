@@ -9,6 +9,8 @@ public interface UserMapper {
     @Select("select * from user where uid = #{uid};")
     UserDTO getUserDTO(int uid);
 
+    /*
+    //only userdto can get uid
     @Insert("insert into user (openid ,unionid,wechat_nickname,nickname,avatar , country , province , city , sex , " +
             " birthday , mobile , is_robot) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
             "#{avatar},#{country},#{province},#{city},#{sex},#{birthday},#{mobile},#{is_robot});")
@@ -18,7 +20,7 @@ public interface UserMapper {
                    @Param("avatar") String avatar ,@Param("country") String country ,
                    @Param("province") String province ,@Param("city") String city ,@Param("sex") int sex,
                    @Param("birthday") String birthday ,@Param("mobile") String mobile ,@Param("is_robot") int is_robot);
-
+    */
     @Insert("insert into user (openid ,unionid,wechat_nickname,nickname,avatar , country , province , city , sex , " +
             " birthday , mobile ) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
             "#{avatar},#{country},#{province},#{city},#{sex},#{birthday},#{mobile});")
