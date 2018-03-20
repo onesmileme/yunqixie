@@ -39,5 +39,4 @@ public class TweetDTO {
     private String images;
     private Timestamp ctime;
 
-
 }

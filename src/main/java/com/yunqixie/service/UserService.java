@@ -1,7 +1,7 @@
 package com.yunqixie.service;
 
 import com.yunqixie.domain.dao.UserMapper;
-import com.yunqixie.domain.dto.UserDAO;
+import com.yunqixie.domain.dto.UserDTO;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +16,19 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public UserDAO getUserDAO(int uid){
+    public UserDTO getUserDTO(int uid){
 
         if (uid <= 0){
             return null;
         }
-        return userMapper.getUserDAO(uid);
+        return userMapper.getUserDTO(uid);
     }
 
-    public UserDAO getUserDAOWithOpenid(String openid){
+    public UserDTO getUserDTOWithOpenid(String openid){
         if (openid == null || openid.length() == 0){
             return null;
         }
-        return userMapper.getUserDAOWithOpenid(openid);
+        return userMapper.getUserDTOWithOpenid(openid);
     }
 
     public int insertUserDao(String openid , String unionid , String nickname , String avatar ,
@@ -55,9 +55,9 @@ public class UserService {
         return -1;
     }
 
-    public int insertUserWithUserDAO(UserDAO userDAO){
+    public int insertUserWithUserDTO(UserDTO userDAO){
         try{
-            int result = userMapper.insertUserWithUserDAO(userDAO);
+            int result = userMapper.insertUserWithUserDTO(userDAO);
 
             if (result >= 0) {
                 int uid = userMapper.getUid(userDAO.getOpenid());
@@ -85,8 +85,8 @@ public class UserService {
                 sex,birthday,mobile,0);
     }
 
-    public int updateUserWithUserDAO(UserDAO userDAO){
-        return userMapper.updateUserWithUserDAO(userDAO);
+    public int updateUserWithUserDTO(UserDTO userDAO){
+        return userMapper.updateUserWithUserDTO(userDAO);
     }
 
 }

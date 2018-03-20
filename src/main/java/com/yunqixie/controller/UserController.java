@@ -2,7 +2,7 @@ package com.yunqixie.controller;
 
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.yunqixie.common.RequestErrorConfig;
-import com.yunqixie.domain.dto.UserDAO;
+import com.yunqixie.domain.dto.UserDTO;
 import com.yunqixie.service.UserService;
 import com.yunqixie.utils.ResponseUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class UserController {
     @RequestMapping(value = "/info" , method = RequestMethod.GET)
     public String userInfo(@RequestParam("uid") int uid){
 
-        UserDAO userDAO = userService.getUserDAO(uid);
+        UserDTO userDAO = userService.getUserDTO(uid);
         if (userDAO == null){
             return ResponseUtil.failed(RequestErrorConfig.UID_NOT_FOUND,"uid is invalided");
         }
@@ -34,7 +34,7 @@ public class UserController {
         /*
         *  根据用户操作
         * */
-        UserDAO userDAO = userService.getUserDAOWithOpenid(openid);
+        UserDTO userDAO = userService.getUserDTOWithOpenid(openid);
         if (userDAO == null){
             return ResponseUtil.failed(RequestErrorConfig.OPENID_NOT_FOUND,"openid is invalided");
         }
@@ -56,7 +56,7 @@ public class UserController {
             uid = userService.insertUserDao(openid, unionid, nickname, avatar, country, province, city, sex, birthday, mobile);
         }
 
-        UserDAO userDAO = new UserDAO();
+        UserDTO userDAO = new UserDTO();
         userDAO.setUid(uid);
         return ResponseUtil.successWithModel(userDAO);
     }

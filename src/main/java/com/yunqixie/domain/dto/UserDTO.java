@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
-public class UserDAO {
+public class UserDTO {
 
     private int uid;
     private String openid;

@@ -1,6 +1,6 @@
 package com.yunqixie;
 
-import com.yunqixie.domain.dto.UserDAO;
+import com.yunqixie.domain.dto.UserDTO;
 import com.yunqixie.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,14 +29,14 @@ public class YunqixieApplicationTests {
 
 
 		for (int i = 0; i < 20; i++) {
-			UserDAO userDAO = this.mockUserDAO();
+			UserDTO userDAO = this.mockUserDTO();
 
 			/*
 			int uid = userService.insertUserDao(userDAO.getOpenid(), userDAO.getUnionid(), userDAO.getNickname(), userDAO.getAvatar(),
 					userDAO.getCountry(), userDAO.getProvince(), userDAO.getCity(), userDAO.getSex(),
 					userDAO.getBirthday().toString(), "");
 					*/
-			int uid = userService.insertUserWithUserDAO(userDAO);
+			int uid = userService.insertUserWithUserDTO(userDAO);
 			System.out.println("uid is: " + uid);
 		}
 
@@ -47,7 +47,7 @@ public class YunqixieApplicationTests {
 
 
 		for (int i = 60 ; i < 80 ; i+= 3){
-			UserDAO userDAO = userService.getUserDAO(i);
+			UserDTO userDAO = userService.getUserDTO(i);
 			if (userDAO != null) {
 				System.out.println("user info : " + userDAO.getUid() + " name: " +
 						userDAO.getNickname() + " openid: " + userDAO.getOpenid());
@@ -68,7 +68,7 @@ public class YunqixieApplicationTests {
 		openids.add("123");
 
 		for (String openid:openids) {
-			UserDAO userDAO = userService.getUserDAOWithOpenid(openid);
+			UserDTO userDAO = userService.getUserDTOWithOpenid(openid);
 			if (userDAO != null){
 				System.out.println("user info : " + userDAO.getUid() + " name: " +
 						userDAO.getNickname() + " openid: " + userDAO.getOpenid());
@@ -82,7 +82,7 @@ public class YunqixieApplicationTests {
 	@Test
 	public  void updateTest(){
 
-		UserDAO userDAO = userService.getUserDAO(60);
+		UserDTO userDAO = userService.getUserDTO(60);
 		userDAO.setNickname("dengdengdengdeng");
 		userDAO.setAvatar("http://www.good.com");
 
@@ -93,14 +93,14 @@ public class YunqixieApplicationTests {
 				userDAO.getNickname(),userDAO.getAvatar(),userDAO.getCountry(),userDAO.getProvince(),
 				userDAO.getCity(),userDAO.getSex(),userDAO.getBirthday().toString(),userDAO.getMobile());
 //*/
-		userService.updateUserWithUserDAO(userDAO);
+		userService.updateUserWithUserDTO(userDAO);
 
 	}
 
-	private UserDAO mockUserDAO(){
+	private UserDTO mockUserDTO(){
 
 		long time = System.currentTimeMillis();
-		UserDAO userDAO = new UserDAO();
+		UserDTO userDAO = new UserDTO();
 		Random random = new Random(time);
 		long openid = random.nextInt()*random.nextInt()*random.nextInt();
 		System.out.println("openid is: "+openid);
