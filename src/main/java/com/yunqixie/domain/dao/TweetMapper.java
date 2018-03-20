@@ -8,10 +8,12 @@ public interface TweetMapper {
 
 
     @Insert("insert into tweet(uid,type,content, images) values(#{uid},#{type},#{content},#{images});")
+    @Options(useGeneratedKeys = true , keyProperty = "tid" , keyColumn = "tid")
     int publishTweet(@Param("uid") int uid ,@Param("type") int type ,@Param("content") String content ,
                      @Param("images") String images);
 
     @Insert("insert into tweet(uid,type,content, images) values(#{uid},#{type},#{content},#{images});")
+    @Options(useGeneratedKeys = true , keyProperty = "tid" , keyColumn = "tid")
     int publishTweetWithDTO(TweetDTO tweetDTO);
 
 

@@ -12,6 +12,7 @@ public interface UserMapper {
     @Insert("insert into user (openid ,unionid,wechat_nickname,nickname,avatar , country , province , city , sex , " +
             " birthday , mobile , is_robot) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
             "#{avatar},#{country},#{province},#{city},#{sex},#{birthday},#{mobile},#{is_robot});")
+    @Options(useGeneratedKeys = true , keyProperty = "uid",keyColumn = "uid")
     int insertUser(@Param("openid") String openid ,@Param("unionid") String unionid ,
                    @Param("wechat_nickname") String wechat_name , @Param("nickname") String nickname ,
                    @Param("avatar") String avatar ,@Param("country") String country ,
@@ -21,6 +22,7 @@ public interface UserMapper {
     @Insert("insert into user (openid ,unionid,wechat_nickname,nickname,avatar , country , province , city , sex , " +
             " birthday , mobile ) values(#{openid},#{unionid},#{wechat_nickname},#{nickname}," +
             "#{avatar},#{country},#{province},#{city},#{sex},#{birthday},#{mobile});")
+    @Options(useGeneratedKeys = true , keyProperty = "uid",keyColumn = "uid")
     int insertUserWithUserDTO(UserDTO userDAO);
 
     @Select("select * from user where openid = #{openid};")

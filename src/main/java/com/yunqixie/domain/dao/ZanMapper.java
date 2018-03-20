@@ -8,6 +8,7 @@ public interface ZanMapper {
 
     @Insert("insert into zan(tid,uid,to_uid,username) values(#{tid},#{uid},#{to_uid}" +
             ",#{username});")
+    @Options(useGeneratedKeys = true , keyProperty = "zid",keyColumn = "zid")
     int addZan(ZanDTO zanDTO);
 
     @Delete("delete from zan where zid = #{zid};")

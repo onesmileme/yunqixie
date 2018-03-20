@@ -15,11 +15,15 @@ public interface RelationMapper {
             "b_uid=#{uid} and type = 1 or a_uid=#{uid} and type = 3;")
     List<RelationDTO> getFollower(int uid);
 
-    @Select("select * from relation where a_uid = #{a_uid} or b_uid = #{a_uid};")
-    List<RelationDTO> checkFollow(@Param("a_uid") int a_uid);
+    @Select("select * from relation where a_uid = #{a_uid} and b_uid = #{b_uid} or " +
+            "a_uid = #{b_uid} and b_uid = #{a_uid};")
+    RelationDTO checkFollow(@Param("a_uid") int a_uid , @Param("b_uid")int b_uid);
 
     @Update("insert into relation(a_uid , b_uid , type) values(#{a_uid},#{b_uid}, #{type}); ")
     int addFollow(@Param("a_uid") int a_uid ,@Param("b_uid") int b_uid ,@Param("type") int type); // a follow b
+
+    @Update("insert into relation(a_uid , b_uid , type) values(#{a_uid},#{b_uid}, #{type}); ")
+    int addFollowWithModel(RelationDTO relationDTO);
 
     @Update("update relation set type = #{type} where a_uid = #{a_uid} and b_uid=#{b_uid};")
     int updateFollow(RelationDTO relationDTO);

@@ -11,6 +11,7 @@ public class CommentDTO {
     private int tid;
     private int from_uid;
     private int to_uid;
+    private int to_cid;
     private int is_del;
     private Timestamp ctime;
 }

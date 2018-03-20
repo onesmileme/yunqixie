@@ -2,6 +2,7 @@ package com.yunqixie.domain.dao;
 
 import com.yunqixie.domain.dto.CommentDTO;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Mapper
 public interface CommentMapper {
@@ -20,5 +21,11 @@ public interface CommentMapper {
 
     @Delete("delete from comment where cid = #{cid};")
     int delCommentForce(int cid);
+
+    @Select("select * from comment where cid = #{cid};")
+    CommentDTO getComment(@RequestParam("cid") int cid);
+
+    @Select("select * from comment where cid = #{cid} and tid = #{tid} and from_uid = #{uid};")
+    CommentDTO getCommeent(int cid , int tid , int uid);
 
 }

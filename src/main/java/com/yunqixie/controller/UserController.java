@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("user")
@@ -59,6 +61,31 @@ public class UserController {
         UserDTO userDAO = new UserDTO();
         userDAO.setUid(uid);
         return ResponseUtil.successWithModel(userDAO);
+    }
+
+    @RequestMapping(value = "/follow" , method = RequestMethod.POST)
+    public String follow(@RequestParam("uid") int uid , @RequestParam("to_uid") int toUid){
+
+        int followType = userService.follow(uid,toUid);
+        if (followType > 0){
+            Map<String,Integer> hmap = new HashMap<>();
+            hmap.put("type",Integer.valueOf(followType));
+            return ResponseUtil.successWithModel(hmap);
+        }
+
+        return ResponseUtil.failed(RequestErrorConfig.FOLLOW_FAILED,"FOLLOW FAILED");
+    }
+
+    @RequestMapping(value = "/unfollow", method = RequestMethod.POST)
+    public String unfollow(@RequestParam("uid") int uid , @RequestParam("to_uid") int toUid){
+
+        int followType = userService.unfollow(uid,toUid);
+        if (followType >= 0){
+            Map<String,Integer> hmap = new HashMap<>();
+            hmap.put("type",Integer.valueOf(followType));
+            return ResponseUtil.successWithModel(hmap);
+        }
+        return ResponseUtil.failed(RequestErrorConfig.UNFOLLOW_FAILED,"UNFOLLOW FAILED");
     }
 
 }

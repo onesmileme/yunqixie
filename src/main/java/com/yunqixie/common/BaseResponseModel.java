@@ -1,4 +1,4 @@
-package com.yunqixie.domain.common;
+package com.yunqixie.common;
 
 public class BaseResponseModel {
 
