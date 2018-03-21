@@ -38,5 +38,6 @@ public class TweetDTO {
     private String content;
     private String images;
     private Timestamp ctime;
+    private int is_del;
 
 }

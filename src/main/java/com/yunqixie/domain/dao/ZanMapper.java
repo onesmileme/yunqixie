@@ -3,6 +3,8 @@ package com.yunqixie.domain.dao;
 import com.yunqixie.domain.dto.ZanDTO;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface ZanMapper {
 
@@ -20,4 +22,6 @@ public interface ZanMapper {
     @Select("select * from zan where tid = #{tid} and uid = #{uid};")
     ZanDTO getZan(@Param("tid") int tid ,@Param("uid") int uid);
 
+    @Select("select * from zan where tid = #{tid} order by zid;")
+    List<ZanDTO> getTweetZans(@Param("tid") int tid);
 }

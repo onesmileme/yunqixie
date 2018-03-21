@@ -140,11 +140,15 @@ public class YunqixieApplicationTests {
         CommentDTO commentDTO = new CommentDTO();
 
         commentDTO.setTid(1);
-        commentDTO.setFrom_uid(108);
-        commentDTO.setContent("不错");
 
-        int cid = tweetService.doComment(commentDTO);
-        Assert.isTrue(cid > 0 , "comment failed");
+        for (int i = 0 ; i < 10 ; i++) {
+            commentDTO.setFrom_uid(90+i);
+            commentDTO.setContent("不错 "+i);
+
+            int cid = tweetService.doComment(commentDTO);
+            Assert.isTrue(cid > 0 , "comment failed");
+        }
+
     }
 
     @Test

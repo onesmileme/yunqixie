@@ -1,6 +1,7 @@
 package com.yunqixie.domain.dao;
 
 import com.yunqixie.domain.dto.CommentDTO;
+import com.yunqixie.domain.vo.CountVO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,4 +37,11 @@ public interface CommentMapper {
 
     @Select("select * from comment where tid = #{tid} order by ctime asec limit #{limit};")
     List<CommentDTO> getTweetCommentList(@Param("tid") int tid ,@Param("limit") int limit);
+
+    @Select("select * from comment where tid = #{tid};")
+    List<CommentDTO> getTweetAllComments(@Param("tid") int tid);
+
+    @Select("select count(*) from comment where tid = #{tid} and is_del = 0 ;")
+    @Options(useGeneratedKeys = true , keyColumn = "count",keyProperty = "count")
+    int getTweetCommentCount(CountVO countVO);
 }
