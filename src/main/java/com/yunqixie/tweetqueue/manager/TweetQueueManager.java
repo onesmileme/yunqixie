@@ -2,6 +2,8 @@ package com.yunqixie.tweetqueue.manager;
 
 import com.yunqixie.domain.dto.TweetDTO;
 import com.yunqixie.tweetqueue.model.TweetQueueModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,10 +14,7 @@ public class TweetQueueManager {
     public static TweetQueueManager sharedManager = new TweetQueueManager();
     private List<TweetQueueModel> tweetLists = new LinkedList<>();
 
-    private TweetQueueManager(){
-        super();
 
-    }
 
     public synchronized int getTweetQueueCount(){
         return tweetLists.size();
@@ -42,12 +41,12 @@ public class TweetQueueManager {
         }
     }
 
-    public void removeTweet(TweetDTO tweetDTO){
+    public void removeTweet(int tid){
 
         int i = 0;
         for (; i < tweetLists.size();i++){
             TweetQueueModel model = tweetLists.get(i);
-            if (model.getTid() == tweetDTO.getTid()){
+            if (model.getTid() == tid){
                 break;
             }
         }

@@ -6,6 +6,8 @@ import com.yunqixie.domain.dto.RelationDTO;
 import com.yunqixie.domain.dto.UserDTO;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.MyBatisSystemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
@@ -24,6 +26,8 @@ public class UserService {
 
     @Autowired
     RelationMapper relationMapper;
+
+    private Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserDTO getUserDTO(int uid) {
 
@@ -96,8 +100,10 @@ public class UserService {
             }
         } catch (DuplicateKeyException sqlException) {
             System.out.println(sqlException);
+            logger.error(sqlException.getLocalizedMessage(),sqlException);
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
+            logger.error(e.getLocalizedMessage(),e);
         }
 
         return -1;
@@ -135,11 +141,14 @@ public class UserService {
             }
         } catch (DuplicateKeyException sqlException) {
             System.out.println(sqlException);
+            logger.error(sqlException.getLocalizedMessage(),sqlException);
         } catch (MyBatisSystemException be) {
             System.out.println(be.getLocalizedMessage());
             System.out.println(be.getStackTrace());
+            logger.error(be.getLocalizedMessage(),be);
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
+            logger.error(e.getLocalizedMessage(),e);
         }
 
         return -1;

@@ -1,6 +1,6 @@
 package com.yunqixie.controller;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+//import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.yunqixie.common.RequestErrorConfig;
 import com.yunqixie.domain.dto.UserDTO;
 import com.yunqixie.service.UserService;

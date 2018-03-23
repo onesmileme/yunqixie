@@ -2,6 +2,7 @@ package com.yunqixie.domain.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 enum TweetType  {
@@ -30,7 +31,7 @@ enum TweetType  {
 }
 
 @Data
-public class TweetDTO {
+public class TweetDTO implements Serializable {
 
     private int uid;
     private int tid;

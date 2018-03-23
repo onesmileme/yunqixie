@@ -8,8 +8,13 @@ import com.yunqixie.domain.dto.CommentDTO;
 import com.yunqixie.domain.dto.TweetDTO;
 import com.yunqixie.domain.dto.UserDTO;
 import com.yunqixie.domain.dto.ZanDTO;
+import com.yunqixie.tweetqueue.manager.TweetQueueManager;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.logging.Logger;
 
 @Service
 public class TweetService {
@@ -25,6 +30,8 @@ public class TweetService {
 
     @Autowired
     UserMapper userMapper;
+
+    private  org.slf4j.Logger logger = LoggerFactory.getLogger(TweetService.class);
 
 
     public int publish(int uid , String content , String images ){
@@ -43,6 +50,10 @@ public class TweetService {
         tweetDTO.setContent(content);
         tweetDTO.setImages(images != null ?images:"");
         tweetMapper.publishTweetWithDTO(tweetDTO);
+
+        //current since not so enough tweets , every created tweet will put to hot news
+        TweetQueueManager.sharedManager.addTweet(tweetDTO);
+
         return tweetDTO.getTid();
     }
 
@@ -54,11 +65,14 @@ public class TweetService {
             TweetDTO tweetDTO = this.getTweet(tid);
             if (tweetDTO != null && tweetDTO.getUid() == uid){
                 tweetMapper.deleteTweet(tid);
+                //try remove queue tweet
+                TweetQueueManager.sharedManager.removeTweet(tid);
             }else{
                 return -2;
             }
 
         }catch (Exception e){
+            logger.error(e.getLocalizedMessage());
             e.printStackTrace();
             return -1;
         }
@@ -97,6 +111,7 @@ public class TweetService {
             zanMapper.addZan(zanDTO);
         }catch (Exception e){
             e.printStackTrace();
+            logger.error(e.getLocalizedMessage(),e);
             return -1;
         }
 

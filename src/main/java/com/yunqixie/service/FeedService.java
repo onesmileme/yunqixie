@@ -8,6 +8,7 @@ import com.yunqixie.domain.dto.*;
 import com.yunqixie.tweetqueue.manager.TweetQueueManager;
 import com.yunqixie.tweetqueue.model.TweetQueueModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -28,6 +29,8 @@ public class FeedService {
     @Autowired
     RelationMapper relationMapper;
 
+    //@Autowired
+    //private RedisTemplate redisTemplate; //目前因为系统配置比较挫，先用内存简单存一下帖子，待后续有了数据再用redis存
 
     private static final int PAGE_ITEM_COUNT = 20;//每页读取 20项内容
 
