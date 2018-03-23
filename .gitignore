@@ -11,6 +11,8 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.idea/workspace.xml
+workspace.xml
 *.iws
 *.iml
 *.ipr
@@ -22,3 +24,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+
+#application.properties
+
+.DS_Store
+yunqixie.log
