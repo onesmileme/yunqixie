@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-public class HotFeedsDTO {
+public class FeedListDTO {
 
     List<FeedDTO> tweetList;
 

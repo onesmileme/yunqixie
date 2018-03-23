@@ -1,6 +1,7 @@
 package com.yunqixie.service;
 
 import com.yunqixie.domain.dao.CommentMapper;
+import com.yunqixie.domain.dao.RelationMapper;
 import com.yunqixie.domain.dao.TweetMapper;
 import com.yunqixie.domain.dao.ZanMapper;
 import com.yunqixie.domain.dto.*;
@@ -24,12 +25,12 @@ public class FeedService {
     @Autowired
     CommentMapper commentMapper;
 
+    @Autowired
+    RelationMapper relationMapper;
+
+
     private static final int PAGE_ITEM_COUNT = 20;//每页读取 20项内容
 
-    public FeedService() {
-        super();
-      //  this.initTweetQueueManager();
-    }
 
     @Autowired
     public void setTweetMapper(TweetMapper tweetMapper){
@@ -37,14 +38,14 @@ public class FeedService {
         this.initTweetQueueManager();
     }
 
-    public HotFeedsDTO getHotFeeds(int pageIndex, int uid) {
+    public FeedListDTO getHotFeeds(int pageIndex, int uid) {
 
         TweetQueueManager manager = TweetQueueManager.sharedManager;
 
         List<TweetQueueModel> models = manager.getTweetsBetween(pageIndex * PAGE_ITEM_COUNT, (pageIndex + 1) * PAGE_ITEM_COUNT);
         if (models != null && models.size() > 0) {
 
-            HotFeedsDTO feedsDTO = new HotFeedsDTO();
+            FeedListDTO feedsDTO = new FeedListDTO();
             List<FeedDTO> feedDTOS = new LinkedList<>();
 
             for (TweetQueueModel model : models) {
@@ -80,11 +81,36 @@ public class FeedService {
      *
      * @return
      */
-    public HotFeedsDTO getTopFeeds() {
+    public FeedListDTO getTopFeeds() {
 
         return null;
     }
 
+
+    public List<FeedListDTO> getFriendsFeeds(int pn , int uid){
+
+
+        List<RelationDTO> relationDTOS = relationMapper.getFollower(uid);
+
+        if (relationDTOS != null){
+
+            StringBuilder idsStr = new StringBuilder();
+
+            for (RelationDTO relation : relationDTOS){
+                int rid = relation.getA_uid() == uid ? relation.getA_uid() : relation.getB_uid();
+                if(idsStr.length() == 0){
+                    idsStr.append(rid);
+                }else{
+                    idsStr.append(","+rid);
+                }
+            }
+
+            List<TweetDTO> tweetDTOS = tweetMapper.getTweetsByUsers(idsStr.toString());
+
+        }
+
+        return null;
+    }
 
     private synchronized void initTweetQueueManager() {
 

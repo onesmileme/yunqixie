@@ -13,7 +13,11 @@ public interface RelationMapper {
 
     @Select("select * from relation where a_uid=#{uid} and type = 2 or " +
             "b_uid=#{uid} and type = 1 or a_uid=#{uid} and type = 3;")
-    List<RelationDTO> getFollower(int uid);
+    List<RelationDTO> getFans(int uid); //get users that follow uid
+
+    @Select("select * from relation where b_uid=#{uid} and type = 2 or " +
+            "a_uid=#{uid} and type = 1 or a_uid=#{uid} and type = 3;")
+    List<RelationDTO> getFollower(int uid);//get users that uid follows
 
     @Select("select * from relation where a_uid = #{a_uid} and b_uid = #{b_uid} or " +
             "a_uid = #{b_uid} and b_uid = #{a_uid};")

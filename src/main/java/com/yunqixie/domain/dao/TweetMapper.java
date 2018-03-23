@@ -36,5 +36,8 @@ public interface TweetMapper {
     @Select("select * from tweet where is_del = 0 order by tid desc;")
     List<TweetDTO> getAllTweets(); //Stupid get all tweets
 
+    @Select("select * from tweet where tid in (#{ids}) order by tid desc;")
+    List<TweetDTO> getTweetsByUsers(@Param("ids") String ids);
+
 
 }

@@ -1,7 +1,7 @@
 package com.yunqixie.controller;
 
 import com.yunqixie.common.RequestErrorConfig;
-import com.yunqixie.domain.dto.HotFeedsDTO;
+import com.yunqixie.domain.dto.FeedListDTO;
 import com.yunqixie.service.FeedService;
 import com.yunqixie.utils.ResponseUtil;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class HotNewsController {
     public String getNews(@RequestParam(value = "pn" , required = false , defaultValue = "0") int pn , int uid){
 
         try {
-            HotFeedsDTO feedsDTO = feedService.getHotFeeds(pn, uid);
+            FeedListDTO feedsDTO = feedService.getHotFeeds(pn, uid);
             if (feedsDTO != null) {
                 return ResponseUtil.successWithModel(feedsDTO);
             }

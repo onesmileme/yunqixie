@@ -57,6 +57,7 @@ create table comment (
    to_cid int(11) unsigned default '0' comment '回复评论的cid',
    is_del int unsigned not null default '0' comment '是否被删除',
    ctime timestamp not null default current_timestamp comment '创建评论的时间戳',
+   `content` mediumtext NOT NULL COMMENT '回复内容',
    primary key(cid)
 );
 ```
