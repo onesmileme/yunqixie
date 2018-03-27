@@ -3,6 +3,7 @@ package com.yunqixie.controller;
 //import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import com.yunqixie.common.RequestErrorConfig;
 import com.yunqixie.domain.dto.UserDTO;
+import com.yunqixie.security.JWTUtil;
 import com.yunqixie.service.UserService;
 import com.yunqixie.utils.ResponseUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,8 @@ public class UserController {
 
         UserDTO userDAO = new UserDTO();
         userDAO.setUid(uid);
+        String token = JWTUtil.sign(uid+"",userDAO.getOpenid());
+        userDAO.setToken(token);
         return ResponseUtil.successWithModel(userDAO);
     }
 
